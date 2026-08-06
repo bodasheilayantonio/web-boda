@@ -342,33 +342,35 @@ document
 
     };
 
-    const body=new URLSearchParams();
+    try {
 
-    body.append("payload",JSON.stringify(datos));
+    const respuesta = await fetch("/.netlify/functions/asistencia", {
 
-    try{
+        method: "POST",
 
-        const respuesta = await fetch("/.netlify/functions/asistencia", {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
+        headers: {
+            "Content-Type": "application/json"
         },
 
-    body: JSON.stringify(datos)
+        body: JSON.stringify(datos)
 
-});
+    });
 
-        const texto=await respuesta.text();
+    const texto = await respuesta.text();
 
-        console.log(texto);
+    console.log(texto);
 
-        document
-            .getElementById("mensajeExito")
-            .classList.add("visible");
+    const mensaje = document.getElementById("mensajeExito");
 
-         }
+    mensaje.classList.add("visible");
+
+    setTimeout(() => {
+
+        mensaje.classList.remove("visible");
+
+    }, 4000);
+
+}
 
     catch(error){
 
@@ -379,23 +381,3 @@ document
     }
 
 });
-
-
-const mensaje = document.getElementById("mensajeExito");
-
-mensaje.classList.add("visible");
-
-// Limpiar formulario
-document.getElementById("formularioAsistencia").reset();
-
-radioSi.checked = true;
-
-cambiarFormulario();
-
-listaAsistentes.innerHTML = "";
-
-setTimeout(() => {
-
-    mensaje.classList.remove("visible");
-
-}, 4000);
