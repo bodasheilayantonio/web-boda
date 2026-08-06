@@ -382,11 +382,10 @@ try {
         throw new Error(texto || "Error al guardar la confirmación");
     }
 
-    // Confirmación correcta
+// Confirmación correcta
 if (datos.asiste === "si") {
 
     iconoMensaje.textContent = "💛";
-
     tituloMensaje.textContent = "¡Muchas gracias!";
 
     textosMensaje[0].textContent =
@@ -398,7 +397,6 @@ if (datos.asiste === "si") {
 } else {
 
     iconoMensaje.textContent = "🫶";
-
     tituloMensaje.textContent = "¡Muchas gracias!";
 
     textosMensaje[0].textContent =
@@ -409,11 +407,11 @@ if (datos.asiste === "si") {
 
 }
 
-    setTimeout(() => {
+setTimeout(() => {
 
-        mensaje.classList.remove("visible");
+    mensaje.classList.remove("visible");
 
-    }, 4000);
+}, 4000);
 
 } catch (error) {
 
