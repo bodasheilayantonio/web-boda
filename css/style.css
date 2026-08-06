@@ -846,3 +846,180 @@ textarea{
     background:#b45309;
 
 }
+
+
+/* =====================================================
+   RESPONSIVE MÓVILES
+===================================================== */
+
+@media (max-width:768px){
+
+    /* NAVBAR */
+
+    .navbar{
+
+        height:70px;
+
+        padding:0 20px;
+
+    }
+
+    .logo{
+
+        font-size:24px;
+
+    }
+
+    .navbar ul{
+
+        gap:18px;
+
+    }
+
+    .navbar a{
+
+        font-size:15px;
+
+    }
+
+    /* HERO */
+
+    .overlay{
+
+        width:95%;
+
+        padding:35px 20px;
+
+    }
+
+    h1{
+
+        font-size:44px;
+
+        letter-spacing:1px;
+
+    }
+
+    .mensaje{
+
+        font-size:34px;
+
+    }
+
+    h2{
+
+        font-size:34px;
+
+    }
+
+    /* CONTADOR */
+
+    .countdown{
+
+        gap:18px;
+
+        flex-wrap:wrap;
+
+    }
+
+    .countdown span{
+
+        font-size:36px;
+
+    }
+
+    .countdown small{
+
+        font-size:12px;
+
+    }
+
+    /* BIENVENIDA */
+
+    .bienvenida{
+
+        height:auto;
+
+        min-height:100vh;
+
+    }
+
+    .contenido-bienvenida{
+
+        transform:none;
+
+        padding:80px 0;
+
+    }
+
+    .bienvenida h2{
+
+        font-size:38px;
+
+    }
+
+    .bienvenida p{
+
+        font-size:19px;
+
+    }
+
+    /* FINCA */
+
+    .finca{
+
+        height:auto;
+
+        min-height:100vh;
+
+    }
+
+    .tarjeta-finca{
+
+        padding:30px 20px;
+
+    }
+
+    /* ASISTENCIA */
+
+    .tarjeta-asistencia{
+
+        padding:30px 20px;
+
+    }
+
+    .tarjeta-secundaria.visible{
+
+        padding:30px 20px;
+
+    }
+
+    .tarjeta-invitado{
+
+        padding:25px 18px;
+
+    }
+
+    /* RADIOS */
+
+    .radio-group{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:18px;
+
+    }
+
+    /* BOTONES */
+
+    .boton-principal,
+
+    .btn-confirmar{
+
+        width:100%;
+
+    }
+
+}
