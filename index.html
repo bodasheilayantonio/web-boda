@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra boda</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- =========================
+         BARRA DE NAVEGACIÓN
+    ========================== -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Sheila & Antonio
+        </div>
+
+        <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#bienvenida">Bienvenida</a></li>
+            <li><a href="#">Nuestra historia</a></li>
+            <li><a href="#finca">Finca</a></li>
+            <li><a href="#">Programa</a></li>
+            <li><a href="#">Galería</a></li>
+            <li><a href="#asistencia">Asistencia</a></li>
+        </ul>
+
+    </nav>
+
+
+    <!-- =========================
+         PORTADA
+    ========================== -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="overlay">
+
+                <img src="img/logo_flor.png"
+                     class="adorno-floral"
+                     alt="Adorno floral">
+
+                <h1>Sheila & Antonio</h1>
+
+                <p class="mensaje">
+                    ¡Nos casamos!
+                </p>
+
+                <h2>2 de octubre de 2027</h2>
+
+                <button id="btnInfo" class="boton-principal">
+                    Descubre todos los detalles
+                </button>
+
+                <div class="countdown">
+
+                    <div>
+                        <span id="dias">000</span>
+                        <small>Días</small>
+                    </div>
+
+                    <div>
+                        <span id="horas">00</span>
+                        <small>Horas</small>
+                    </div>
+
+                    <div>
+                        <span id="minutos">00</span>
+                        <small>Minutos</small>
+                    </div>
+
+                    <div>
+                        <span id="segundos">00</span>
+                        <small>Segundos</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         BIENVENIDA
+    ========================== -->
+
+    <section id="bienvenida" class="bienvenida">
+
+        <div class="contenido-bienvenida">
+
+            <h2>¡Bienvenidos!</h2>
+
+            <p>
+                Estamos deseando compartir con vosotros el comienzo de esta nueva aventura.
+            </p>
+
+            <p>
+                Gracias por acompañarnos en uno de los días más importantes de nuestras vidas.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FINCA
+    ========================== -->
+
+    <section id="finca" class="finca">
+
+        <div class="contenido-finca">
+
+            <h2>📍 Lugar de la celebración</h2>
+
+            <div class="tarjeta-finca">
+
+                <h3>Finca FuenteArcos</h3>
+
+                <p class="direccion">
+                    Ctra. Vicálvaro a Rivas del Jarama, km 2<br>
+                    Vicálvaro, 28052 Madrid
+                </p>
+
+                <p>Madrid</p>
+
+                <p class="hora">
+                    🗓️ 2 de octubre de 2027 · 19:00 h
+                </p>
+
+                <a class="btn-mapa"
+                   href="https://www.google.com/maps/place//data=!4m2!3m1!1s0xd423ac9210b9d31:0x128f1963efc38d01?sa=X&ved=1t:8290&ictx=111"
+                   target="_blank">
+
+                    Cómo llegar
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         GALERÍA
+    ========================== -->
+
+    <section class="galeria">
+
+        <div class="contenido-galeria">
+
+            <h2>Nuestra galería</h2>
+
+            <div id="contenedorFotos"></div>
+
+        </div>
+
+    </section>
+
+<!-- =========================
+     ASISTENCIA
+========================= -->
+
+<section id="asistencia" class="asistencia">
+
+    <div class="contenido-asistencia">
+
+        <h2>Confirma tu asistencia</h2>
+
+        <p class="texto-asistencia">
+            Nos haría muchísima ilusión contar contigo en este día tan especial.
+        </p>
+
+        <p class="fecha-limite">
+            Por favor, confirma tu asistencia antes del
+            <span>1 de septiembre de 2027.</span>
+        </p>
+
+        <form id="formularioAsistencia"
+            action="https://script.google.com/macros/s/AKfycbyAbMtqKhKBrFLGI1PVh5pbNw__ouLEEQazLYEHT0qCmwKmHtOqrGkt9QS-QsQX0ey4/exec"
+            method="POST"
+            target="iframeOculto">
+            <!-- =========================
+                 TARJETA PRINCIPAL
+            ========================== -->
+
+            <div class="tarjeta-asistencia">
+
+                <div class="campo">
+
+                    <label for="email">
+                        Correo electrónico
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        placeholder="Si no tienes mail pon boda.sheilayantonio@gmail.com..."></textarea>
+
+                </div>
+
+                <div class="campo">
+
+                    <label>
+                        ¿Asistirás?
+                    </label>
+
+                    <div class="radio-group">
+
+                        <label>
+
+                            <input
+                                type="radio"
+                                name="asistencia"
+                                value="si"
+                                checked>
+
+                            Sí, allí estaremos
+
+                        </label>
+
+                        <label>
+
+                            <input
+                                type="radio"
+                                name="asistencia"
+                                value="no">
+
+                            No podremos asistir
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- =========================
+                 TARJETA INVITADOS
+            ========================== -->
+
+            <div
+                id="tarjetaInvitados"
+                class="tarjeta-asistencia tarjeta-secundaria visible">
+
+                <div class="campo">
+
+                    <label for="totalAsistentes">
+                        ¿Cuántas personas asistirán?
+                    </label>
+
+                    <select
+                        id="totalAsistentes"
+                        name="totalAsistentes">
+
+                        <option value="">Selecciona...</option>
+
+                        <option value="1">1 persona</option>
+                        <option value="2">2 personas</option>
+                        <option value="3">3 personas</option>
+                        <option value="4">4 personas</option>
+                        <option value="5">5 personas</option>
+                        <option value="6">6 personas</option>
+
+                    </select>
+
+                </div>
+
+                <div id="listaAsistentes"></div>
+
+                <div class="campo mensaje-final">
+
+                    <label for="comentariosSi">
+                        ¿Quieres dejarnos un mensaje?
+                    </label>
+
+                    <textarea
+                        id="comentariosSi"
+                        name="comentariosSi"
+                        placeholder="Escribe aquí lo que quieras contarnos..."></textarea>
+
+                </div>
+
+            </div>
+
+            <!-- =========================
+                 TARJETA MENSAJE
+            ========================== -->
+
+            <div
+                id="tarjetaMensaje"
+                class="tarjeta-asistencia tarjeta-secundaria">
+
+                <div class="campo">
+
+                    <label for="comentarios">
+                        ¿Quieres dejarnos un mensaje?
+                    </label>
+
+                    <textarea
+                        id="comentarios"
+                        name="comentarios"
+                        placeholder="Escribe aquí lo que quieras contarnos..."></textarea>
+
+                </div>
+
+            </div>
+
+            <!-- =========================
+                 BOTÓN
+            ========================== -->
+
+            <button
+                type="submit"
+                class="btn-confirmar">
+
+                Confirmar asistencia
+
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+<!-- JavaScript -->
+
+<script src="js/script.js"></script>
+
+<iframe
+    name="iframeOculto"
+    style="display:none;">
+</iframe>
+
+</body>
+</html>
