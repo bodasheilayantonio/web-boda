@@ -348,13 +348,17 @@ document
 
     try{
 
-        const respuesta=await fetch("https://script.google.com/macros/s/AKfycbyAbMtqKhKBrFLGI1PVh5pbNw__ouLEEQazLYEHT0qCmwKmHtOqrGkt9QS-QsQX0ey4/exec",{
+        const respuesta = await fetch("/.netlify/functions/asistencia", {
 
-            method:"POST",
+            method: "POST",
 
-            body
+            headers: {
+                "Content-Type": "application/json"
+        },
 
-        });
+    body: JSON.stringify(datos)
+
+});
 
         const texto=await respuesta.text();
 
