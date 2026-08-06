@@ -737,3 +737,112 @@ textarea{
     border-top:1px solid rgba(0,0,0,.08);
 
 }
+
+/* ===========================
+   MENSAJE DE CONFIRMACIÓN
+=========================== */
+
+.mensaje-exito{
+
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.55);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.35s;
+
+    z-index:9999;
+
+}
+
+.mensaje-exito.visible{
+
+    opacity:1;
+    visibility:visible;
+
+}
+
+.mensaje-exito-card{
+
+    background:white;
+
+    padding:45px;
+
+    width:min(90%,480px);
+
+    border-radius:22px;
+
+    text-align:center;
+
+    transform:translateY(25px);
+
+    transition:.35s;
+
+    box-shadow:0 25px 60px rgba(0,0,0,.20);
+
+}
+
+.mensaje-exito.visible .mensaje-exito-card{
+
+    transform:translateY(0);
+
+}
+
+.check{
+
+    font-size:55px;
+
+    margin-bottom:15px;
+
+}
+
+.mensaje-exito h2{
+
+    margin-bottom:15px;
+
+    color:#d97706;
+
+}
+
+.mensaje-exito p{
+
+    margin-bottom:10px;
+
+    line-height:1.6;
+
+}
+
+.mensaje-exito button{
+
+    margin-top:25px;
+
+    border:none;
+
+    padding:14px 30px;
+
+    border-radius:40px;
+
+    cursor:pointer;
+
+    background:#d97706;
+
+    color:white;
+
+    font-size:16px;
+
+    transition:.25s;
+
+}
+
+.mensaje-exito button:hover{
+
+    background:#b45309;
+
+}

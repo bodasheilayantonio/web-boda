@@ -364,9 +364,11 @@ document
 
         console.log(texto);
 
-        alert("¡Muchas gracias! Hemos recibido vuestra confirmación.");
+        document
+            .getElementById("mensajeExito")
+            .classList.add("visible");
 
-    }
+         }
 
     catch(error){
 
@@ -377,3 +379,23 @@ document
     }
 
 });
+
+
+const mensaje = document.getElementById("mensajeExito");
+
+mensaje.classList.add("visible");
+
+// Limpiar formulario
+document.getElementById("formularioAsistencia").reset();
+
+radioSi.checked = true;
+
+cambiarFormulario();
+
+listaAsistentes.innerHTML = "";
+
+setTimeout(() => {
+
+    mensaje.classList.remove("visible");
+
+}, 4000);
