@@ -511,4 +511,4 @@ function cerrarMenu(){
     document.body.style.overflow = "";
 }
 
-console.log("VERSION MENSAJES 2");
+console.log("PRUEBA VERSION NUEVA");
