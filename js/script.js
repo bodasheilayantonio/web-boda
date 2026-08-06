@@ -382,7 +382,64 @@ document
 
 });
 
+// =========================================
+// MENÚ HAMBURGUESA
+// =========================================
 
-// ================================
-// ENVÍO DEL FORMULARIO
-// ================================
+const menuToggle = document.getElementById("menuToggle");
+const menuNavegacion = document.getElementById("menuNavegacion");
+
+menuToggle.addEventListener("click", function(){
+
+    const abierto =
+        menuNavegacion.classList.toggle("menu-abierto");
+
+    menuToggle.classList.toggle("activo", abierto);
+
+    menuToggle.setAttribute(
+        "aria-expanded",
+        abierto
+    );
+
+});
+
+
+// Cerrar al pulsar un enlace
+
+menuNavegacion
+    .querySelectorAll("a")
+    .forEach(enlace => {
+
+        enlace.addEventListener("click", cerrarMenu);
+
+    });
+
+
+// Cerrar al pulsar fuera
+
+document.addEventListener("click", function(event){
+
+    const pulsadoDentro =
+        event.target.closest(".navbar");
+
+    if(!pulsadoDentro){
+
+        cerrarMenu();
+
+    }
+
+});
+
+
+function cerrarMenu(){
+
+    menuNavegacion.classList.remove("menu-abierto");
+
+    menuToggle.classList.remove("activo");
+
+    menuToggle.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+
+}
