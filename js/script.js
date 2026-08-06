@@ -346,51 +346,56 @@ document
 
     body.append("payload",JSON.stringify(datos));
 
-   try {
+    try{
 
-    const respuesta = await fetch("/.netlify/functions/asistencia", {
+        const respuesta = await fetch("/.netlify/functions/asistencia", {
 
-        method: "POST",
+            method: "POST",
 
-        headers: {
-            "Content-Type": "application/json"
+            headers: {
+                "Content-Type": "application/json"
         },
 
-        body: JSON.stringify(datos)
+    body: JSON.stringify(datos)
 
-    });
+});
 
-    const texto = await respuesta.text();
+        const texto=await respuesta.text();
 
-    console.log(texto);
+        console.log(texto);
 
-    // Mostrar mensaje
-    const mensaje = document.getElementById("mensajeExito");
+        document
+            .getElementById("mensajeExito")
+            .classList.add("visible");
 
-    mensaje.classList.add("visible");
+         }
 
-    // Limpiar formulario
-    document.getElementById("formularioAsistencia").reset();
+    catch(error){
 
-    radioSi.checked = true;
+        console.error(error);
 
-    cambiarFormulario();
+        alert("Error al enviar.");
 
-    listaAsistentes.innerHTML = "";
+    }
 
-    // Ocultar mensaje después de 4 segundos
-    setTimeout(() => {
+});
 
-        mensaje.classList.remove("visible");
 
-    }, 4000);
+const mensaje = document.getElementById("mensajeExito");
 
-}
+mensaje.classList.add("visible");
 
-catch(error) {
+// Limpiar formulario
+document.getElementById("formularioAsistencia").reset();
 
-    console.error(error);
+radioSi.checked = true;
 
-    alert("Error al enviar.");
+cambiarFormulario();
 
-}
+listaAsistentes.innerHTML = "";
+
+setTimeout(() => {
+
+    mensaje.classList.remove("visible");
+
+}, 4000);
