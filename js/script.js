@@ -383,8 +383,12 @@ try {
     }
 
 // Confirmación correcta
-if (datos.asiste === "si") {
 
+console.log(datos);
+console.log("Asiste =", datos.asiste);
+
+if (datos.asiste === "si") {
+    console.log("ENTRA EN SI");
     iconoMensaje.textContent = "💛";
     tituloMensaje.textContent = "¡Muchas gracias!";
 
@@ -395,7 +399,8 @@ if (datos.asiste === "si") {
         "¡Estamos deseando celebrar este día con vosotros!";
 
 } else {
-
+    
+    console.log("ENTRA EN NO");
     iconoMensaje.textContent = "🫶";
     tituloMensaje.textContent = "¡Muchas gracias!";
 
