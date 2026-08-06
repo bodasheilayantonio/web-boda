@@ -443,5 +443,5 @@ function cerrarMenu(){
         "aria-expanded",
         "false"
     );
-
+    document.body.style.overflow = "";
 }
