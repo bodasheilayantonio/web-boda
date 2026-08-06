@@ -510,3 +510,5 @@ function cerrarMenu(){
     );
     document.body.style.overflow = "";
 }
+
+console.log("VERSION MENSAJES 2");
