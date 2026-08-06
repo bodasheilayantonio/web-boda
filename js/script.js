@@ -383,7 +383,10 @@ try {
     }
 
     // Confirmación correcta
-    iconoMensaje.textContent = "❤";
+if (datos.asiste === "si") {
+
+    iconoMensaje.textContent = "💛";
+
     tituloMensaje.textContent = "¡Muchas gracias!";
 
     textosMensaje[0].textContent =
@@ -391,6 +394,20 @@ try {
 
     textosMensaje[1].textContent =
         "¡Estamos deseando celebrar este día con vosotros!";
+
+} else {
+
+    iconoMensaje.textContent = "🫶";
+
+    tituloMensaje.textContent = "¡Muchas gracias!";
+
+    textosMensaje[0].textContent =
+        "Hemos recibido vuestra respuesta.";
+
+    textosMensaje[1].textContent =
+        "Lamentamos mucho que no podáis acompañarnos, pero os agradecemos de corazón que nos lo hayáis comunicado.";
+
+}
 
     setTimeout(() => {
 
