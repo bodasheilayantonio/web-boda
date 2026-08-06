@@ -1464,10 +1464,10 @@ textarea{
     .radio-group label{
         display:grid;
 
-        grid-template-columns:24px auto;
+        grid-template-columns:28px auto;
         align-items:center;
 
-        column-gap:8px;
+        column-gap:14px;
 
         width:auto;
         max-width:100%;
