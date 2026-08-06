@@ -400,6 +400,8 @@ menuToggle.addEventListener("click", function(){
         "aria-expanded",
         abierto
     );
+    
+    document.body.style.overflow = abierto ? "hidden" : "";
 
 });
 
