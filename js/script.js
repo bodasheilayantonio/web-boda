@@ -342,27 +342,55 @@ document
 
     };
 
-    try {
+    const mensaje = document.getElementById("mensajeExito");
+    const iconoMensaje = mensaje.querySelector(".check");
+    const tituloMensaje = mensaje.querySelector("h2");
+    const textosMensaje = mensaje.querySelectorAll("p");
+    const botonConfirmar = document.querySelector(".btn-confirmar");
 
-    const respuesta = await fetch("/.netlify/functions/asistencia", {
+try {
 
-        method: "POST",
+    // Mostrar respuesta inmediata
+    iconoMensaje.textContent = "⏳";
+    tituloMensaje.textContent = "Enviando confirmación…";
+    textosMensaje[0].textContent =
+        "Estamos guardando vuestra respuesta.";
+    textosMensaje[1].textContent =
+        "Solo tardará unos segundos.";
 
-        headers: {
-            "Content-Type": "application/json"
-        },
+    mensaje.classList.add("visible");
 
-        body: JSON.stringify(datos)
+    botonConfirmar.disabled = true;
+    botonConfirmar.textContent = "Enviando…";
 
-    });
+    const respuesta = await fetch(
+        "/.netlify/functions/asistencia",
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(datos)
+        }
+    );
 
     const texto = await respuesta.text();
 
-    console.log(texto);
+    if (!respuesta.ok || texto.trim() !== "OK") {
+        throw new Error(texto || "Error al guardar la confirmación");
+    }
 
-    const mensaje = document.getElementById("mensajeExito");
+    // Confirmación correcta
+    iconoMensaje.textContent = "❤";
+    tituloMensaje.textContent = "¡Muchas gracias!";
 
-    mensaje.classList.add("visible");
+    textosMensaje[0].textContent =
+        "Hemos recibido correctamente vuestra confirmación.";
+
+    textosMensaje[1].textContent =
+        "¡Estamos deseando celebrar este día con vosotros!";
 
     setTimeout(() => {
 
@@ -370,15 +398,31 @@ document
 
     }, 4000);
 
+} catch (error) {
+
+    console.error(error);
+
+    iconoMensaje.textContent = "⚠";
+    tituloMensaje.textContent = "No se ha podido enviar";
+
+    textosMensaje[0].textContent =
+        "Ha ocurrido un problema al guardar vuestra confirmación.";
+
+    textosMensaje[1].textContent =
+        "Por favor, inténtalo de nuevo dentro de unos segundos.";
+
+    setTimeout(() => {
+
+        mensaje.classList.remove("visible");
+
+    }, 4000);
+
+} finally {
+
+    botonConfirmar.disabled = false;
+    botonConfirmar.textContent = "Confirmar asistencia";
+
 }
-
-    catch(error){
-
-        console.error(error);
-
-        alert("Error al enviar.");
-
-    }
 
 });
 
