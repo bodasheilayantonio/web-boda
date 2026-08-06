@@ -384,8 +384,9 @@ try {
 
 // Confirmación correcta
 
+console.log("================================");
 console.log(datos);
-console.log("Asiste =", datos.asiste);
+console.log("Asiste:", datos.asiste);
 
 if (datos.asiste === "si") {
     console.log("ENTRA EN SI");
