@@ -384,12 +384,9 @@ try {
 
 // Confirmación correcta
 
-console.log("================================");
-console.log(datos);
-console.log("Asiste:", datos.asiste);
 
 if (datos.asiste === "si") {
-    console.log("ENTRA EN SI");
+
     iconoMensaje.textContent = "💛";
     tituloMensaje.textContent = "¡Muchas gracias!";
 
@@ -401,7 +398,6 @@ if (datos.asiste === "si") {
 
 } else {
     
-    console.log("ENTRA EN NO");
     iconoMensaje.textContent = "🫶";
     tituloMensaje.textContent = "¡Muchas gracias!";
 
@@ -510,5 +506,3 @@ function cerrarMenu(){
     );
     document.body.style.overflow = "";
 }
-
-console.log("PRUEBA VERSION NUEVA");
