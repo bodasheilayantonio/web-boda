@@ -1190,7 +1190,10 @@ btnGuardarModificacion.addEventListener(
             email: email,
 
             filaOriginal:
-                resultadosEdicionActual[0].fila,
+            resultadosEdicionActual[0].fila,
+
+            nombreOriginal:
+            resultadosEdicionActual[0].nombre,
 
             asiste: asiste,
 
@@ -1201,9 +1204,9 @@ btnGuardarModificacion.addEventListener(
             invitados: invitados,
 
             nombreNoAsiste:
-                asiste === "no"
-                ? resultadosEdicionActual[0].nombre
-                : ""
+            asiste === "no"
+            ? resultadosEdicionActual[0].nombre
+            : ""
 
         };
 
