@@ -608,14 +608,18 @@ btnBuscarConfirmacion.addEventListener("click", async function(){
         if(datos.encontrado){
 
             mensajeBusqueda.textContent =
-                "✔ Hemos encontrado vuestra confirmación.";
+            "✔ Hemos encontrado vuestra confirmación.";
 
-            console.log(datos.resultados);
+            mostrarConfirmacion(datos.resultados);
 
         }else{
 
+            document
+            .getElementById("datosConfirmacion")
+            .classList.remove("visible");
+
             mensajeBusqueda.textContent =
-                "❌ No existe ninguna confirmación con ese correo.";
+            "❌ No existe ninguna confirmación con ese correo.";
 
         }
 
@@ -633,3 +637,97 @@ btnBuscarConfirmacion.addEventListener("click", async function(){
         "Buscar mi confirmación";
 
 });
+
+function mostrarConfirmacion(resultados){
+
+    const bloque =
+        document.getElementById("datosConfirmacion");
+
+    const contenido =
+        document.getElementById("contenidoConfirmacion");
+
+    const primeraFila = resultados[0];
+
+    let html = "";
+
+    // Si había respondido que NO
+    if(
+        String(primeraFila.asiste)
+            .toLowerCase() === "no"
+    ){
+
+        html += `
+            <div class="invitado-encontrado">
+
+                <strong>Estado actual</strong>
+
+                No asistirás
+
+            </div>
+        `;
+
+    }
+
+    // Si había respondido que SÍ
+    else{
+
+        html += `
+            <div class="invitado-encontrado">
+
+                <strong>Asistencia</strong>
+
+                Sí asistirás
+
+            </div>
+        `;
+
+        resultados.forEach((invitado, indice) => {
+
+            html += `
+                <div class="invitado-encontrado">
+
+                    <strong>
+                        Invitado ${indice + 1}: ${invitado.nombre}
+                    </strong>
+
+                    <div>
+                        ${invitado.categoria || ""}
+                    </div>
+
+                    ${
+                        invitado.alergias
+                        ? `
+                            <div>
+                                Alergias:
+                                ${invitado.alergias}
+                            </div>
+                          `
+                        : ""
+                    }
+
+                </div>
+            `;
+
+        });
+
+    }
+
+    if(primeraFila.comentarios){
+
+        html += `
+            <div class="invitado-encontrado">
+
+                <strong>Mensaje</strong>
+
+                ${primeraFila.comentarios}
+
+            </div>
+        `;
+
+    }
+
+    contenido.innerHTML = html;
+
+    bloque.classList.add("visible");
+
+}

@@ -1730,3 +1730,63 @@ textarea{
 
     color:#6d5848;
 }
+
+/* =====================================================
+   DATOS CONFIRMACIÓN ENCONTRADA
+===================================================== */
+
+.datos-confirmacion{
+
+    display:none;
+
+    margin-top:30px;
+
+    padding-top:25px;
+
+    border-top:1px solid rgba(0,0,0,.10);
+
+}
+
+.datos-confirmacion.visible{
+
+    display:block;
+
+}
+
+.datos-confirmacion h3{
+
+    text-align:center;
+
+    font-size:24px;
+
+    margin-bottom:20px;
+
+    color:#6d5848;
+
+}
+
+.invitado-encontrado{
+
+    margin-bottom:15px;
+
+    padding:18px;
+
+    border-radius:15px;
+
+    background:#f7f4ef;
+
+}
+
+.invitado-encontrado strong{
+
+    display:block;
+
+    margin-bottom:5px;
+
+}
+
+#btnEditarConfirmacion{
+
+    margin-top:20px;
+
+}
