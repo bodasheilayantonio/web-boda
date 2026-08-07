@@ -1184,31 +1184,30 @@ btnGuardarModificacion.addEventListener(
                 .value;
 
         
+const datos = {
 
-        const datos = {
+    email: email,
 
-            email: email,
+    filaOriginal:
+        resultadosEdicionActual[0].fila,
 
-            filaOriginal:
-            resultadosEdicionActual[0].fila,
+    nombreOriginal:
+        resultadosEdicionActual[0].nombre,
 
-            nombreOriginal:
-            resultadosEdicionActual[0].nombre,
+    asiste: asiste,
 
-            asiste: asiste,
+    total: invitados.length,
 
-            total: invitados.length,
+    comentarios: comentarios,
 
-            comentarios: comentarios,
+    invitados: invitados,
 
-            invitados: invitados,
+    nombreNoAsiste:
+        asiste === "no"
+        ? resultadosEdicionActual[0].nombre
+        : ""
 
-            nombreNoAsiste:
-            asiste === "no"
-            ? resultadosEdicionActual[0].nombre
-            : ""
-
-        };
+};
 
 
         btnGuardarModificacion.disabled = true;
