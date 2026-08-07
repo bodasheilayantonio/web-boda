@@ -1187,10 +1187,10 @@ btnGuardarModificacion.addEventListener(
 
         const datos = {
 
-            
             email: email,
+
             filaOriginal:
-            resultadosEdicionActual[0].fila,
+                resultadosEdicionActual[0].fila,
 
             asiste: asiste,
 
@@ -1198,7 +1198,12 @@ btnGuardarModificacion.addEventListener(
 
             comentarios: comentarios,
 
-            invitados: invitados
+            invitados: invitados,
+
+            nombreNoAsiste:
+                asiste === "no"
+                ? resultadosEdicionActual[0].nombre
+                : ""
 
         };
 
@@ -1234,28 +1239,14 @@ btnGuardarModificacion.addEventListener(
                 await respuesta.json();
 
 
-            if(!resultado.ok){
+            if (!resultado.ok) {
 
-                if(
-                    resultado.motivo ===
-                    "email_compartido"
-                ){
-
-                    alert(
-                        "Esta confirmación utiliza el correo genérico. Para modificarla necesitaremos identificar al invitado de otra forma."
-                    );
-
-                }else{
-
-                    alert(
-                        "No hemos podido encontrar la confirmación."
-                    );
-
-                }
+            alert(
+                "No hemos podido actualizar la asistencia. Por favor, inténtalo de nuevo."
+                );
 
                 return;
-
-            }
+            }   
 
 
             contenidoEdicion.innerHTML = `
@@ -1332,102 +1323,3 @@ btnGuardarModificacion.addEventListener(
 
     }
 );
-
-async function cancelarAsistenciaGenerica(nombre){
-
-    mensajeBusqueda.textContent = "";
-
-    btnBuscarConfirmacion.disabled = true;
-    btnBuscarConfirmacion.textContent =
-        "Buscando...";
-
-    try{
-
-        const respuesta = await fetch(
-            "/.netlify/functions/cancelar-generico",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
-
-                body: JSON.stringify({
-                    nombre: nombre
-                })
-            }
-        );
-
-        const texto =
-            await respuesta.text();
-
-        if(!respuesta.ok){
-
-            throw new Error(
-                texto ||
-                "Error del servidor"
-            );
-
-        }
-
-        const resultado =
-            JSON.parse(texto);
-
-
-        if(resultado.ok){
-
-            mensajeBusqueda.textContent =
-                "✔ Hemos actualizado correctamente la asistencia de " +
-                resultado.nombre +
-                ".";
-
-            nombreGenerico.value = "";
-
-        }
-
-        else if(
-            resultado.motivo ===
-            "no_encontrado"
-        ){
-
-            mensajeBusqueda.textContent =
-                "❌ No hemos encontrado ninguna persona con ese nombre.";
-
-        }
-
-        else if(
-            resultado.motivo ===
-            "nombre_duplicado"
-        ){
-
-            mensajeBusqueda.textContent =
-                "⚠ Hay más de una persona registrada con ese nombre. Contactad con Sheila y Antonio para modificar la asistencia.";
-
-        }
-
-        else{
-
-            mensajeBusqueda.textContent =
-                "No hemos podido modificar la asistencia.";
-
-        }
-
-    }catch(error){
-
-        console.error(error);
-
-        mensajeBusqueda.textContent =
-            "Ha ocurrido un error al modificar la asistencia.";
-
-    }finally{
-
-        btnBuscarConfirmacion.disabled =
-            false;
-
-        btnBuscarConfirmacion.textContent =
-            "Cancelar asistencia";
-
-    }
-
-}
