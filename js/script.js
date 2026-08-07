@@ -338,7 +338,11 @@ document
         asiste,
         total: invitados.length,
         comentarios,
-        invitados
+        invitados,
+        nombreNoAsiste:
+            asiste === "no"
+            ? document.getElementById("nombreNoAsiste").value.trim()
+            : ""
 
     };
 
