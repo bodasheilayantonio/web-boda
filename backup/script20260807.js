@@ -346,7 +346,7 @@ document
     const iconoMensaje = mensaje.querySelector(".check");
     const tituloMensaje = mensaje.querySelector("h2");
     const textosMensaje = mensaje.querySelectorAll("p");
-    const botonConfirmar = document.querySelector('#formularioAsistencia button[type="submit"]');
+    const botonConfirmar = document.querySelector(".btn-confirmar");
 
 try {
 
@@ -507,80 +507,68 @@ function cerrarMenu(){
     document.body.style.overflow = "";
 }
 
-
-
 // =========================================
-// MODAL MODIFICAR ASISTENCIA - ELEMENTOS
+// MODAL MODIFICAR ASISTENCIA
 // =========================================
 
-const btnModificar = document.getElementById("btnModificar");
-const modalModificar = document.getElementById("modalModificar");
-const cerrarModalModificar = document.getElementById("cerrarModalModificar");
+const btnModificar =
+    document.getElementById("btnModificar");
 
-const pantallaBuscarMod = document.getElementById("pantallaBuscar");
-const pantallaResultadoMod = document.getElementById("pantallaResultado");
-const pantallaEditarMod = document.getElementById("pantallaEditar");
+const modalModificar =
+    document.getElementById("modalModificar");
 
-const btnBuscarConfirmacion = document.getElementById("btnBuscarConfirmacion");
-const emailModificar = document.getElementById("emailModificar");
-const mensajeBusqueda = document.getElementById("mensajeBusqueda");
+const cerrarModalModificar =
+    document.getElementById("cerrarModalModificar");
 
-const contenidoEdicion = document.getElementById("contenidoEdicion");
-const btnEditarConfirmacion = document.getElementById("btnEditarConfirmacion");
-
-let resultadosEdicionActual = [];
-
-
-// =========================================
-// CAMBIO DE PANTALLAS DEL MODAL
-// =========================================
-
-function mostrarPantallaModal(pantalla){
-
-    pantallaBuscarMod.classList.remove("visible");
-    pantallaResultadoMod.classList.remove("visible");
-    pantallaEditarMod.classList.remove("visible");
-
-    pantalla.classList.add("visible");
-
-}
-
-
-// =========================================
-// ABRIR / CERRAR MODAL
-// =========================================
 
 btnModificar.addEventListener("click", function(){
 
-    mostrarPantallaModal(pantallaBuscarMod);
-    mensajeBusqueda.textContent = "";
-
     modalModificar.classList.add("visible");
+
     document.body.style.overflow = "hidden";
 
 });
 
-cerrarModalModificar.addEventListener("click", cerrarModalAsistencia);
+
+cerrarModalModificar.addEventListener("click", function(){
+
+    cerrarModalAsistencia();
+
+});
+
 
 modalModificar.addEventListener("click", function(e){
 
     if(e.target === modalModificar){
+
         cerrarModalAsistencia();
+
     }
 
 });
 
+
 function cerrarModalAsistencia(){
 
     modalModificar.classList.remove("visible");
+
     document.body.style.overflow = "";
 
 }
 
-
 // =========================================
 // BUSCAR CONFIRMACIÓN
 // =========================================
+
+const btnBuscarConfirmacion =
+    document.getElementById("btnBuscarConfirmacion");
+
+const emailModificar =
+    document.getElementById("emailModificar");
+
+const mensajeBusqueda =
+    document.getElementById("mensajeBusqueda");
+
 
 btnBuscarConfirmacion.addEventListener("click", async function(){
 
@@ -590,7 +578,9 @@ btnBuscarConfirmacion.addEventListener("click", async function(){
 
     if(email === ""){
 
-        mensajeBusqueda.textContent = "Introduce un correo electrónico.";
+        mensajeBusqueda.textContent =
+            "Introduce un correo electrónico.";
+
         return;
 
     }
@@ -603,11 +593,13 @@ btnBuscarConfirmacion.addEventListener("click", async function(){
         const respuesta = await fetch(
             "/.netlify/functions/buscar-asistencia",
             {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
                 },
-                body: JSON.stringify({ email })
+                body:JSON.stringify({
+                    email
+                })
             }
         );
 
@@ -615,19 +607,27 @@ btnBuscarConfirmacion.addEventListener("click", async function(){
 
         if(datos.encontrado){
 
+            mensajeBusqueda.textContent =
+            "✔ Hemos encontrado vuestra confirmación.";
+
+            // Guardamos los datos para poder editarlos después
             resultadosEdicionActual = datos.resultados;
 
             mostrarConfirmacion(datos.resultados);
+
+            // Pasamos a la pantalla de resultado
             mostrarPantallaModal(pantallaResultadoMod);
 
         }else{
 
             resultadosEdicionActual = [];
+
             mensajeBusqueda.textContent =
-                "❌ No existe ninguna confirmación con ese correo.";
+            "❌ No existe ninguna confirmación con ese correo.";
 
         }
 
+        
     }catch(error){
 
         console.error(error);
@@ -635,43 +635,54 @@ btnBuscarConfirmacion.addEventListener("click", async function(){
         mensajeBusqueda.textContent =
             "Ha ocurrido un error durante la búsqueda.";
 
-    }finally{
-
-        btnBuscarConfirmacion.disabled = false;
-        btnBuscarConfirmacion.textContent = "Buscar mi confirmación";
-
     }
+
+    btnBuscarConfirmacion.disabled = false;
+    btnBuscarConfirmacion.textContent =
+        "Buscar mi confirmación";
 
 });
 
-
-// =========================================
-// MOSTRAR CONFIRMACIÓN ENCONTRADA
-// =========================================
-
 function mostrarConfirmacion(resultados){
 
-    const bloque = document.getElementById("datosConfirmacion");
-    const contenido = document.getElementById("contenidoConfirmacion");
+    const bloque =
+        document.getElementById("datosConfirmacion");
+
+    const contenido =
+        document.getElementById("contenidoConfirmacion");
+
     const primeraFila = resultados[0];
 
     let html = "";
 
-    if(String(primeraFila.asiste).toLowerCase() === "no"){
+    // Si había respondido que NO
+    if(
+        String(primeraFila.asiste)
+            .toLowerCase() === "no"
+    ){
 
         html += `
             <div class="invitado-encontrado">
+
                 <strong>Estado actual</strong>
+
                 No asistirás
+
             </div>
         `;
 
-    }else{
+    }
+
+    // Si había respondido que SÍ
+    else{
 
         html += `
             <div class="invitado-encontrado">
+
                 <strong>Asistencia</strong>
+
                 Sí asistirás
+
             </div>
         `;
 
@@ -679,13 +690,26 @@ function mostrarConfirmacion(resultados){
 
             html += `
                 <div class="invitado-encontrado">
-                    <strong>Invitado ${indice + 1}: ${escaparHTML(invitado.nombre || "")}</strong>
-                    <div>${escaparHTML(invitado.categoria || "")}</div>
+
+                    <strong>
+                        Invitado ${indice + 1}: ${invitado.nombre}
+                    </strong>
+
+                    <div>
+                        ${invitado.categoria || ""}
+                    </div>
+
                     ${
                         invitado.alergias
-                        ? `<div>Alergias: ${escaparHTML(invitado.alergias)}</div>`
+                        ? `
+                            <div>
+                                Alergias:
+                                ${invitado.alergias}
+                            </div>
+                          `
                         : ""
                     }
+
                 </div>
             `;
 
@@ -697,33 +721,67 @@ function mostrarConfirmacion(resultados){
 
         html += `
             <div class="invitado-encontrado">
+
                 <strong>Mensaje</strong>
-                ${escaparHTML(primeraFila.comentarios)}
+
+                ${primeraFila.comentarios}
+
             </div>
         `;
 
     }
 
     contenido.innerHTML = html;
-    bloque.classList.add("visible");
 
 }
 
+// =========================================
+// PANTALLAS DEL MODAL DE MODIFICACIÓN
+// =========================================
+
+const pantallaBuscarMod =
+    document.getElementById("pantallaBuscar");
+
+const pantallaResultadoMod =
+    document.getElementById("pantallaResultado");
+
+const pantallaEditarMod =
+    document.getElementById("pantallaEditar");
+
+const contenidoEdicion =
+    document.getElementById("contenidoEdicion");
+
+const btnEditarConfirmacion =
+    document.getElementById("btnEditarConfirmacion");
+
+let resultadosEdicionActual = [];
+
+
+function mostrarPantallaModal(pantalla){
+
+    pantallaBuscarMod.classList.remove("visible");
+    pantallaResultadoMod.classList.remove("visible");
+    pantallaEditarMod.classList.remove("visible");
+
+    pantalla.classList.add("visible");
+
+}
 
 // =========================================
-// EDITAR CONFIRMACIÓN
+// BOTÓN EDITAR MI ASISTENCIA
 // =========================================
 
-btnEditarConfirmacion.addEventListener("click", function(){
+        btnEditarConfirmacion.addEventListener("click", function(){
 
-    if(resultadosEdicionActual.length === 0){
+        if(resultadosEdicionActual.length === 0){
         return;
-    }
+        }
 
-    crearFormularioEdicion(resultadosEdicionActual);
-    mostrarPantallaModal(pantallaEditarMod);
+        crearFormularioEdicion(resultadosEdicionActual);
 
-});
+        mostrarPantallaModal(pantallaEditarMod);
+
+        });
 
 function crearFormularioEdicion(resultados){
 

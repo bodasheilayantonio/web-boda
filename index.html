@@ -424,56 +424,103 @@
             ×
         </button>
 
-        <h2>Modificar asistencia</h2>
 
-        <p>
-            Introduce el correo electrónico que utilizaste al confirmar.
-        </p>
+        <!-- =========================================
+             PANTALLA 1 - BUSCAR CONFIRMACIÓN
+        ========================================== -->
 
-        <div class="campo">
+        <div
+            id="pantallaBuscar"
+            class="pantalla-modal visible">
 
-            <label for="emailModificar">
-                Correo electrónico
-            </label>
+            <h2>Modificar asistencia</h2>
 
-            <input
-                type="email"
-                id="emailModificar"
-                placeholder="tu@email.com">
+            <p>
+                Introduce el correo electrónico que utilizaste al confirmar.
+            </p>
 
-        </div>
+            <div class="campo">
 
-        <button
-            type="button"
-            id="btnBuscarConfirmacion"
-            class="btn-confirmar">
+                <label for="emailModificar">
+                    Correo electrónico
+                </label>
 
-            Buscar mi confirmación
+                <input
+                    type="email"
+                    id="emailModificar"
+                    placeholder="tu@email.com">
 
-        </button>
-
-        <p
-            id="mensajeBusqueda"
-            class="mensaje-busqueda">
-        </p>
-        <div id="datosConfirmacion" class="datos-confirmacion">
-
-            <h3>Tu confirmación actual</h3>
-
-            <div id="contenidoConfirmacion"></div>
+            </div>
 
             <button
                 type="button"
-                id="btnEditarConfirmacion"
+                id="btnBuscarConfirmacion"
                 class="btn-confirmar">
 
-                Editar mi asistencia
+                Buscar mi confirmación
+
+            </button>
+
+            <p
+                id="mensajeBusqueda"
+                class="mensaje-busqueda">
+            </p>
+
+        </div>
+
+
+        <!-- =========================================
+             PANTALLA 2 - RESULTADO ENCONTRADO
+        ========================================== -->
+
+        <div
+            id="pantallaResultado"
+            class="pantalla-modal">
+
+            <h2>Tu confirmación actual</h2>
+
+            <div
+                id="datosConfirmacion"
+                class="datos-confirmacion">
+
+                <div id="contenidoConfirmacion"></div>
+
+                <button
+                    type="button"
+                    id="btnEditarConfirmacion"
+                    class="btn-confirmar">
+
+                    Editar mi asistencia
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             PANTALLA 3 - EDITAR CONFIRMACIÓN
+        ========================================== -->
+
+        <div
+            id="pantallaEditar"
+            class="pantalla-modal">
+
+            <h2>Modificar asistencia</h2>
+
+            <div id="contenidoEdicion"></div>
+
+            <button
+                type="button"
+                id="btnGuardarModificacion"
+                class="btn-confirmar">
+
+                Guardar cambios
 
             </button>
 
         </div>
-        
-        
 
     </div>
 
