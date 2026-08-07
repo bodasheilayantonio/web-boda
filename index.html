@@ -270,6 +270,24 @@
 
                         </label>
 
+                        
+                    </div>
+
+                    <div class="modificar-asistencia">
+
+                        <p>
+                            ¿Necesitas cambiar una respuesta que ya habías enviado?
+                        </p>
+
+                        <button
+                            type="button"
+                            id="btnModificar"
+                            class="btn-confirmar">
+
+                                Modificar asistencia
+
+                        </button>
+
                     </div>
 
                 </div>
@@ -365,9 +383,6 @@
 
 </section>
 
-<!-- JavaScript -->
-
-<script src="js/script.js"></script>
 
 <iframe
     name="iframeOculto"
@@ -397,6 +412,58 @@
     </div>
 
 </div>
+
+<div id="modalModificar" class="modal-modificar">
+
+    <div class="modal-modificar-card">
+
+        <button
+            type="button"
+            id="cerrarModalModificar"
+            class="cerrar-modal">
+            ×
+        </button>
+
+        <h2>Modificar asistencia</h2>
+
+        <p>
+            Introduce el correo electrónico que utilizaste al confirmar.
+        </p>
+
+        <div class="campo">
+
+            <label for="emailModificar">
+                Correo electrónico
+            </label>
+
+            <input
+                type="email"
+                id="emailModificar"
+                placeholder="tu@email.com">
+
+        </div>
+
+        <button
+            type="button"
+            id="btnBuscarConfirmacion"
+            class="btn-confirmar">
+
+            Buscar mi confirmación
+
+        </button>
+
+        <p
+            id="mensajeBusqueda"
+            class="mensaje-busqueda">
+        </p>
+
+    </div>
+
+</div>
+
+<!-- JavaScript -->
+
+<script src="js/script.js"></script>
 
 </body>
 </html>

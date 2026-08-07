@@ -847,7 +847,40 @@ textarea{
 
 }
 
+/* =====================================================
+   BOTÓN MODIFICAR ASISTENCIA
+===================================================== */
 
+.modificar-asistencia{
+
+    margin-top:35px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.modificar-asistencia p{
+
+    margin:0;
+
+    text-align:center;
+
+    color:#6d5848;
+
+}
+
+#btnModificar{
+
+    width:320px;
+    max-width:100%;
+
+}
 /* =====================================================
    RESPONSIVE MÓVILES
 ===================================================== */
@@ -1597,4 +1630,103 @@ textarea{
 
     }
 
+}
+
+
+/* =====================================================
+   MODAL MODIFICAR ASISTENCIA
+===================================================== */
+
+.modal-modificar{
+
+    position:fixed;
+    inset:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:20px;
+
+    background:rgba(0,0,0,.55);
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.3s;
+
+    z-index:9999;
+}
+
+.modal-modificar.visible{
+
+    opacity:1;
+    visibility:visible;
+}
+
+.modal-modificar-card{
+
+    position:relative;
+
+    width:min(90%,520px);
+
+    padding:45px;
+
+    background:white;
+
+    border-radius:25px;
+
+    box-shadow:0 25px 60px rgba(0,0,0,.25);
+
+    transform:translateY(25px);
+
+    transition:.3s;
+}
+
+.modal-modificar.visible .modal-modificar-card{
+
+    transform:translateY(0);
+}
+
+.modal-modificar-card h2{
+
+    text-align:center;
+
+    margin-top:0;
+    margin-bottom:15px;
+
+    color:#6d5848;
+}
+
+.modal-modificar-card > p{
+
+    text-align:center;
+
+    margin-bottom:30px;
+}
+
+.cerrar-modal{
+
+    position:absolute;
+
+    top:15px;
+    right:20px;
+
+    border:none;
+    background:none;
+
+    font-size:30px;
+
+    cursor:pointer;
+
+    color:#777;
+}
+
+.mensaje-busqueda{
+
+    margin-top:20px;
+
+    text-align:center;
+
+    color:#6d5848;
 }

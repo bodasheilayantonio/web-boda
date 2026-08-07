@@ -506,3 +506,130 @@ function cerrarMenu(){
     );
     document.body.style.overflow = "";
 }
+
+// =========================================
+// MODAL MODIFICAR ASISTENCIA
+// =========================================
+
+const btnModificar =
+    document.getElementById("btnModificar");
+
+const modalModificar =
+    document.getElementById("modalModificar");
+
+const cerrarModalModificar =
+    document.getElementById("cerrarModalModificar");
+
+
+btnModificar.addEventListener("click", function(){
+
+    modalModificar.classList.add("visible");
+
+    document.body.style.overflow = "hidden";
+
+});
+
+
+cerrarModalModificar.addEventListener("click", function(){
+
+    cerrarModalAsistencia();
+
+});
+
+
+modalModificar.addEventListener("click", function(e){
+
+    if(e.target === modalModificar){
+
+        cerrarModalAsistencia();
+
+    }
+
+});
+
+
+function cerrarModalAsistencia(){
+
+    modalModificar.classList.remove("visible");
+
+    document.body.style.overflow = "";
+
+}
+
+// =========================================
+// BUSCAR CONFIRMACIÓN
+// =========================================
+
+const btnBuscarConfirmacion =
+    document.getElementById("btnBuscarConfirmacion");
+
+const emailModificar =
+    document.getElementById("emailModificar");
+
+const mensajeBusqueda =
+    document.getElementById("mensajeBusqueda");
+
+
+btnBuscarConfirmacion.addEventListener("click", async function(){
+
+    mensajeBusqueda.textContent = "";
+
+    const email = emailModificar.value.trim();
+
+    if(email === ""){
+
+        mensajeBusqueda.textContent =
+            "Introduce un correo electrónico.";
+
+        return;
+
+    }
+
+    btnBuscarConfirmacion.disabled = true;
+    btnBuscarConfirmacion.textContent = "Buscando...";
+
+    try{
+
+        const respuesta = await fetch(
+            "/.netlify/functions/buscar-asistencia",
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    email
+                })
+            }
+        );
+
+        const datos = await respuesta.json();
+
+        if(datos.encontrado){
+
+            mensajeBusqueda.textContent =
+                "✔ Hemos encontrado vuestra confirmación.";
+
+            console.log(datos.resultados);
+
+        }else{
+
+            mensajeBusqueda.textContent =
+                "❌ No existe ninguna confirmación con ese correo.";
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+        mensajeBusqueda.textContent =
+            "Ha ocurrido un error durante la búsqueda.";
+
+    }
+
+    btnBuscarConfirmacion.disabled = false;
+    btnBuscarConfirmacion.textContent =
+        "Buscar mi confirmación";
+
+});
