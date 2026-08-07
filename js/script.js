@@ -1011,3 +1011,270 @@ function escaparHTML(texto){
         .replaceAll("'", "&#039;");
 
 }
+
+// =========================================
+// GUARDAR MODIFICACIÓN
+// =========================================
+
+const btnGuardarModificacion =
+    document.getElementById(
+        "btnGuardarModificacion"
+    );
+
+
+btnGuardarModificacion.addEventListener(
+    "click",
+    async function(){
+
+        if(resultadosEdicionActual.length === 0){
+            return;
+        }
+
+
+        const email =
+            resultadosEdicionActual[0].email;
+
+
+        const radioSeleccionado =
+            document.querySelector(
+                'input[name="asistenciaEdicion"]:checked'
+            );
+
+
+        if(!radioSeleccionado){
+
+            alert("Selecciona si asistirás o no.");
+
+            return;
+
+        }
+
+
+        const asiste =
+            radioSeleccionado.value;
+
+
+        let invitados = [];
+
+
+        // =====================================
+        // SI ASISTIRÁ
+        // =====================================
+
+        if(asiste === "si"){
+
+            const nombres =
+                contenidoEdicion.querySelectorAll(
+                    ".editar-nombre"
+                );
+
+            const categorias =
+                contenidoEdicion.querySelectorAll(
+                    ".editar-categoria"
+                );
+
+            const alergias =
+                contenidoEdicion.querySelectorAll(
+                    ".editar-alergias"
+                );
+
+
+            for(let i = 0; i < nombres.length; i++){
+
+                const nombre =
+                    nombres[i].value.trim();
+
+                const categoria =
+                    categorias[i].value;
+
+
+                if(nombre === ""){
+
+                    alert(
+                        "Completa el nombre de todos los invitados."
+                    );
+
+                    return;
+
+                }
+
+
+                if(categoria === ""){
+
+                    alert(
+                        "Selecciona la categoría de todos los invitados."
+                    );
+
+                    return;
+
+                }
+
+
+                invitados.push({
+
+                    nombre: nombre,
+
+                    categoria: categoria,
+
+                    alergias:
+                        alergias[i].value.trim()
+
+                });
+
+            }
+
+        }
+
+
+        const comentarios =
+            document
+                .getElementById(
+                    "comentariosEdicion"
+                )
+                .value;
+
+
+        const datos = {
+
+            email: email,
+
+            asiste: asiste,
+
+            total: invitados.length,
+
+            comentarios: comentarios,
+
+            invitados: invitados
+
+        };
+
+
+        btnGuardarModificacion.disabled = true;
+
+        btnGuardarModificacion.textContent =
+            "Guardando cambios...";
+
+
+        try{
+
+            const respuesta = await fetch(
+
+                "/.netlify/functions/modificar-asistencia",
+
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(datos)
+                }
+
+            );
+
+
+            const resultado =
+                await respuesta.json();
+
+
+            if(!resultado.ok){
+
+                if(
+                    resultado.motivo ===
+                    "email_compartido"
+                ){
+
+                    alert(
+                        "Esta confirmación utiliza el correo genérico. Para modificarla necesitaremos identificar al invitado de otra forma."
+                    );
+
+                }else{
+
+                    alert(
+                        "No hemos podido encontrar la confirmación."
+                    );
+
+                }
+
+                return;
+
+            }
+
+
+            contenidoEdicion.innerHTML = `
+
+                <div
+                    style="
+                        text-align:center;
+                        padding:30px 10px;
+                    ">
+
+                    <div
+                        style="
+                            font-size:46px;
+                            margin-bottom:15px;
+                        ">
+                        💛
+                    </div>
+
+                    <h3>
+                        Cambios guardados
+                    </h3>
+
+                    <p>
+                        Hemos actualizado vuestra asistencia correctamente.
+                    </p>
+
+                </div>
+
+            `;
+
+
+            btnGuardarModificacion.style.display =
+                "none";
+
+
+            resultadosEdicionActual = [];
+
+
+            setTimeout(() => {
+
+                cerrarModalAsistencia();
+
+                btnGuardarModificacion.style.display =
+                    "";
+
+                btnGuardarModificacion.textContent =
+                    "Guardar cambios";
+
+                mostrarPantallaModal(
+                    pantallaBuscarMod
+                );
+
+                emailModificar.value = "";
+
+                mensajeBusqueda.textContent = "";
+
+            }, 3000);
+
+
+        }catch(error){
+
+            console.error(error);
+
+            alert(
+                "Ha ocurrido un error al guardar los cambios."
+            );
+
+        }finally{
+
+            btnGuardarModificacion.disabled =
+                false;
+
+        }
+
+    }
+);
