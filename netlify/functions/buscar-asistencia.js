@@ -19,9 +19,10 @@ exports.handler = async (event) => {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          accion: "buscar",
-          email: datos.email
-        })
+        accion: "buscar",
+        email: datos.email,
+        nombre: datos.nombre || ""
+            })
       }
     );
 

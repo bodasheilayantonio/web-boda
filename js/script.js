@@ -619,25 +619,11 @@ btnBuscarConfirmacion.addEventListener("click", async function(){
 
     const email = emailModificar.value.trim();
 
-    if(
-    email.toLowerCase() === EMAIL_GENERICO
-    ){
+if (email.toLowerCase() === EMAIL_GENERICO &&
+    nombreGenerico.value.trim() === "") {
 
-    const nombre =
-        nombreGenerico.value.trim();
-
-    if(nombre === ""){
-
-        mensajeBusqueda.textContent =
-            "Introduce el nombre y apellidos de la persona que ya no podrá asistir.";
-
-        return;
-
-    }
-
-    cancelarAsistenciaGenerica(
-        nombre
-    );
+    mensajeBusqueda.textContent =
+        "Introduce tu nombre y apellidos.";
 
     return;
 
@@ -662,7 +648,16 @@ btnBuscarConfirmacion.addEventListener("click", async function(){
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ email })
+                body: JSON.stringify({
+
+                email: email,
+
+                nombre:
+                email.toLowerCase() === EMAIL_GENERICO
+                ? nombreGenerico.value.trim()
+                : ""
+
+                })
             }
         );
 
@@ -1194,6 +1189,8 @@ btnGuardarModificacion.addEventListener(
 
             
             email: email,
+            filaOriginal:
+            resultadosEdicionActual[0].fila,
 
             asiste: asiste,
 
