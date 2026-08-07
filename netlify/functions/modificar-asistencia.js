@@ -1,0 +1,61 @@
+export const handler = async (event) => {
+
+  if (event.httpMethod !== "POST") {
+
+    return {
+      statusCode: 405,
+      body: "Método no permitido"
+    };
+
+  }
+
+  try {
+
+    const datos = JSON.parse(event.body);
+
+    const respuesta = await fetch(
+      "https://script.google.com/macros/s/AKfycbyAbMtqKhKBrFLGI1PVh5pbNw__ouLEEQazLYEHT0qCmwKmHtOqrGkt9QS-QsQX0ey4/exec",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          accion: "modificar",
+          ...datos
+        })
+      }
+    );
+
+    const texto = await respuesta.text();
+
+    return {
+      statusCode: 200,
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: texto
+    };
+
+  } catch (error) {
+
+    return {
+      statusCode: 500,
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        ok: false,
+        error: error.toString()
+      })
+    };
+
+  }
+
+};
