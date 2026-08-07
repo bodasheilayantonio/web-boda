@@ -610,18 +610,35 @@ btnBuscarConfirmacion.addEventListener("click", async function(){
             mensajeBusqueda.textContent =
             "✔ Hemos encontrado vuestra confirmación.";
 
+            // Guardamos los datos para poder editarlos después
+            resultadosEdicionActual = datos.resultados;
+
             mostrarConfirmacion(datos.resultados);
+
+            // Pasamos a la pantalla de resultado
+            mostrarPantallaModal(pantallaResultadoMod);
 
         }else{
 
-            document
-            .getElementById("datosConfirmacion")
-            .classList.remove("visible");
+            resultadosEdicionActual = [];
 
             mensajeBusqueda.textContent =
             "❌ No existe ninguna confirmación con ese correo.";
 
         }
+
+        
+        btnEditarConfirmacion.addEventListener("click", function(){
+
+        if(resultadosEdicionActual.length === 0){
+        return;
+        }
+
+        crearFormularioEdicion(resultadosEdicionActual);
+
+        mostrarPantallaModal(pantallaEditarMod);
+
+        });
 
     }catch(error){
 
@@ -729,5 +746,324 @@ function mostrarConfirmacion(resultados){
     contenido.innerHTML = html;
 
     bloque.classList.add("visible");
+
+}
+
+// =========================================
+// PANTALLAS DEL MODAL DE MODIFICACIÓN
+// =========================================
+
+const pantallaBuscarMod =
+    document.getElementById("pantallaBuscar");
+
+const pantallaResultadoMod =
+    document.getElementById("pantallaResultado");
+
+const pantallaEditarMod =
+    document.getElementById("pantallaEditar");
+
+const contenidoEdicion =
+    document.getElementById("contenidoEdicion");
+
+const btnEditarConfirmacion =
+    document.getElementById("btnEditarConfirmacion");
+
+let resultadosEdicionActual = [];
+
+
+function mostrarPantallaModal(pantalla){
+
+    pantallaBuscarMod.classList.remove("visible");
+    pantallaResultadoMod.classList.remove("visible");
+    pantallaEditarMod.classList.remove("visible");
+
+    pantalla.classList.add("visible");
+
+}
+
+function crearFormularioEdicion(resultados){
+
+    const primeraFila = resultados[0];
+
+    const asiste =
+        String(primeraFila.asiste)
+            .trim()
+            .toLowerCase();
+
+    const viene =
+        asiste === "sí" || asiste === "si";
+
+    let html = `
+
+        <div class="campo">
+
+            <label>¿Asistirás?</label>
+
+            <div class="radio-group">
+
+                <label>
+
+                    <input
+                        type="radio"
+                        name="asistenciaEdicion"
+                        value="si"
+                        ${viene ? "checked" : ""}>
+
+                    Sí, allí estaremos.
+
+                </label>
+
+                <label>
+
+                    <input
+                        type="radio"
+                        name="asistenciaEdicion"
+                        value="no"
+                        ${!viene ? "checked" : ""}>
+
+                    No podremos asistir.
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="bloqueInvitadosEdicion"
+            style="${viene ? "" : "display:none;"}">
+
+            <div class="campo">
+
+                <label>
+                    ¿Cuántas personas asistirán?
+                </label>
+
+                <select id="totalEdicion">
+
+                    <option value="1" ${resultados.length === 1 ? "selected" : ""}>
+                        1 persona
+                    </option>
+
+                    <option value="2" ${resultados.length === 2 ? "selected" : ""}>
+                        2 personas
+                    </option>
+
+                    <option value="3" ${resultados.length === 3 ? "selected" : ""}>
+                        3 personas
+                    </option>
+
+                    <option value="4" ${resultados.length === 4 ? "selected" : ""}>
+                        4 personas
+                    </option>
+
+                    <option value="5" ${resultados.length === 5 ? "selected" : ""}>
+                        5 personas
+                    </option>
+
+                    <option value="6" ${resultados.length === 6 ? "selected" : ""}>
+                        6 personas
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div id="invitadosEdicion"></div>
+
+        </div>
+
+
+        <div class="campo">
+
+            <label>
+                ¿Quieres dejarnos un mensaje?
+            </label>
+
+            <textarea
+                id="comentariosEdicion"
+                placeholder="Escribe aquí lo que quieras contarnos...">${primeraFila.comentarios || ""}</textarea>
+
+        </div>
+    `;
+
+    contenidoEdicion.innerHTML = html;
+
+    if(viene){
+
+        crearInvitadosEdicion(
+            resultados.length,
+            resultados
+        );
+
+    }
+
+    // Sí / No
+    const radiosEdicion =
+        contenidoEdicion.querySelectorAll(
+            'input[name="asistenciaEdicion"]'
+        );
+
+    radiosEdicion.forEach(radio => {
+
+        radio.addEventListener("change", function(){
+
+            const bloque =
+                document.getElementById(
+                    "bloqueInvitadosEdicion"
+                );
+
+            if(this.value === "si"){
+
+                bloque.style.display = "";
+
+                const total =
+                    parseInt(
+                        document.getElementById(
+                            "totalEdicion"
+                        ).value
+                    );
+
+                crearInvitadosEdicion(
+                    total,
+                    resultados
+                );
+
+            }else{
+
+                bloque.style.display = "none";
+
+            }
+
+        });
+
+    });
+
+
+    // Cambio del número de asistentes
+    const selector =
+        document.getElementById("totalEdicion");
+
+    selector.addEventListener("change", function(){
+
+        crearInvitadosEdicion(
+            parseInt(this.value),
+            resultados
+        );
+
+    });
+
+}
+
+function crearInvitadosEdicion(
+    total,
+    resultados = []
+){
+
+    const contenedor =
+        document.getElementById(
+            "invitadosEdicion"
+        );
+
+    let html = "";
+
+    for(let i = 0; i < total; i++){
+
+        const invitado =
+            resultados[i] || {};
+
+        html += `
+
+            <div class="tarjeta-invitado visible">
+
+                <h3>
+                    Invitado ${i + 1}
+                </h3>
+
+                <div class="campo">
+
+                    <label>
+                        Nombre y apellidos
+                    </label>
+
+                    <input
+                        type="text"
+                        class="editar-nombre"
+                        value="${escaparHTML(invitado.nombre || "")}"
+                        required>
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>
+                        Categoría
+                    </label>
+
+                    <select class="editar-categoria">
+
+                        <option value="">
+                            Selecciona...
+                        </option>
+
+                        <option
+                            ${invitado.categoria === "Adulto (+18 años)" ? "selected" : ""}>
+
+                            Adulto (+18 años)
+
+                        </option>
+
+                        <option
+                            ${invitado.categoria === "Adolescente (12-17 años)" ? "selected" : ""}>
+
+                            Adolescente (12-17 años)
+
+                        </option>
+
+                        <option
+                            ${invitado.categoria === "Niño (hasta 11 años)" ? "selected" : ""}>
+
+                            Niño (hasta 11 años)
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>
+                        Alergias o intolerancias
+                    </label>
+
+                    <input
+                        type="text"
+                        class="editar-alergias"
+                        value="${escaparHTML(invitado.alergias || "")}"
+                        placeholder="Si no tiene, déjalo vacío">
+
+                </div>
+
+            </div>
+        `;
+
+    }
+
+    contenedor.innerHTML = html;
+
+}
+
+function escaparHTML(texto){
+
+    return String(texto)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 
 }

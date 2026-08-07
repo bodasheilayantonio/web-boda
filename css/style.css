@@ -1796,3 +1796,19 @@ textarea{
     margin-top:20px;
 
 }
+
+/* =====================================================
+   PANTALLAS MODAL MODIFICAR ASISTENCIA
+===================================================== */
+
+.pantalla-modal{
+
+    display:none;
+
+}
+
+.pantalla-modal.visible{
+
+    display:block;
+
+}
