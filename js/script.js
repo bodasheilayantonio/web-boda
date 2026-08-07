@@ -1133,9 +1133,20 @@ btnGuardarModificacion.addEventListener(
                 )
                 .value;
 
+        
+        console.log(
+        "EMAIL ORIGINAL:",
+        resultadosEdicionActual[0].email
+        );
+
+        console.log(
+        "EMAIL A MODIFICAR:",
+        email
+        );
 
         const datos = {
 
+            
             email: email,
 
             asiste: asiste,
