@@ -436,7 +436,8 @@
             <h2>Modificar asistencia</h2>
 
             <p>
-                Introduce el correo electrónico que utilizaste al confirmar.
+                    Introduce el correo con el que realizaste la confirmación. Si utilizaste el correo genérico, también te pediremos el nombre de la persona que desea cancelar su asistencia.
+
             </p>
 
             <div class="campo">
@@ -451,7 +452,21 @@
                     placeholder="tu@email.com">
 
             </div>
+            <div
+                id="bloqueNombreGenerico"
+                class="campo"
+                style="display:none;">
 
+                <label for="nombreGenerico">
+                    Nombre y apellidos de la persona que ya no podrá asistir
+                </label>
+
+            <input
+                type="text"
+                id="nombreGenerico"
+                placeholder="Nombre y apellidos">
+
+    </div>
             <button
                 type="button"
                 id="btnBuscarConfirmacion"

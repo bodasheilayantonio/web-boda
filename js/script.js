@@ -508,27 +508,54 @@ function cerrarMenu(){
 }
 
 
+// =========================================
+// CAMBIO DE PANTALLAS DEL MODAL
+// =========================================
 
 // =========================================
 // MODAL MODIFICAR ASISTENCIA - ELEMENTOS
 // =========================================
-
 const btnModificar = document.getElementById("btnModificar");
 const modalModificar = document.getElementById("modalModificar");
 const cerrarModalModificar = document.getElementById("cerrarModalModificar");
-
 const pantallaBuscarMod = document.getElementById("pantallaBuscar");
 const pantallaResultadoMod = document.getElementById("pantallaResultado");
 const pantallaEditarMod = document.getElementById("pantallaEditar");
-
 const btnBuscarConfirmacion = document.getElementById("btnBuscarConfirmacion");
 const emailModificar = document.getElementById("emailModificar");
 const mensajeBusqueda = document.getElementById("mensajeBusqueda");
+
+const bloqueNombreGenerico = document.getElementById("bloqueNombreGenerico");
+const nombreGenerico = document.getElementById("nombreGenerico");
+
+const EMAIL_GENERICO = "boda.sheilayantonio@gmail.com";
 
 const contenidoEdicion = document.getElementById("contenidoEdicion");
 const btnEditarConfirmacion = document.getElementById("btnEditarConfirmacion");
 
 let resultadosEdicionActual = [];
+
+
+// =========================================
+// MOSTRAR CAMPO PARA EL CORREO GENÉRICO
+// =========================================
+
+emailModificar.addEventListener("input", function () {
+
+    const email = this.value.trim().toLowerCase();
+
+    if (email === EMAIL_GENERICO) {
+
+        bloqueNombreGenerico.style.display = "";
+
+    } else {
+
+        bloqueNombreGenerico.style.display = "none";
+        nombreGenerico.value = "";
+
+    }
+
+});
 
 
 // =========================================
@@ -587,6 +614,30 @@ btnBuscarConfirmacion.addEventListener("click", async function(){
     mensajeBusqueda.textContent = "";
 
     const email = emailModificar.value.trim();
+
+    if(
+    email.toLowerCase() === EMAIL_GENERICO
+    ){
+
+    const nombre =
+        nombreGenerico.value.trim();
+
+    if(nombre === ""){
+
+        mensajeBusqueda.textContent =
+            "Introduce el nombre y apellidos de la persona que ya no podrá asistir.";
+
+        return;
+
+    }
+
+    cancelarAsistenciaGenerica(
+        nombre
+    );
+
+    return;
+
+}
 
     if(email === ""){
 
@@ -1134,15 +1185,6 @@ btnGuardarModificacion.addEventListener(
                 .value;
 
         
-        console.log(
-        "EMAIL ORIGINAL:",
-        resultadosEdicionActual[0].email
-        );
-
-        console.log(
-        "EMAIL A MODIFICAR:",
-        email
-        );
 
         const datos = {
 
@@ -1289,3 +1331,102 @@ btnGuardarModificacion.addEventListener(
 
     }
 );
+
+async function cancelarAsistenciaGenerica(nombre){
+
+    mensajeBusqueda.textContent = "";
+
+    btnBuscarConfirmacion.disabled = true;
+    btnBuscarConfirmacion.textContent =
+        "Buscando...";
+
+    try{
+
+        const respuesta = await fetch(
+            "/.netlify/functions/cancelar-generico",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+                    nombre: nombre
+                })
+            }
+        );
+
+        const texto =
+            await respuesta.text();
+
+        if(!respuesta.ok){
+
+            throw new Error(
+                texto ||
+                "Error del servidor"
+            );
+
+        }
+
+        const resultado =
+            JSON.parse(texto);
+
+
+        if(resultado.ok){
+
+            mensajeBusqueda.textContent =
+                "✔ Hemos actualizado correctamente la asistencia de " +
+                resultado.nombre +
+                ".";
+
+            nombreGenerico.value = "";
+
+        }
+
+        else if(
+            resultado.motivo ===
+            "no_encontrado"
+        ){
+
+            mensajeBusqueda.textContent =
+                "❌ No hemos encontrado ninguna persona con ese nombre.";
+
+        }
+
+        else if(
+            resultado.motivo ===
+            "nombre_duplicado"
+        ){
+
+            mensajeBusqueda.textContent =
+                "⚠ Hay más de una persona registrada con ese nombre. Contactad con Sheila y Antonio para modificar la asistencia.";
+
+        }
+
+        else{
+
+            mensajeBusqueda.textContent =
+                "No hemos podido modificar la asistencia.";
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+        mensajeBusqueda.textContent =
+            "Ha ocurrido un error al modificar la asistencia.";
+
+    }finally{
+
+        btnBuscarConfirmacion.disabled =
+            false;
+
+        btnBuscarConfirmacion.textContent =
+            "Cancelar asistencia";
+
+    }
+
+}
