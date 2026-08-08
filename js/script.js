@@ -380,11 +380,68 @@ try {
         }
     );
 
-    const texto = await respuesta.text();
+const texto = await respuesta.text();
 
-    if (!respuesta.ok || texto.trim() !== "OK") {
-        throw new Error(texto || "Error al guardar la confirmación");
-    }
+let resultado;
+
+try {
+
+    resultado = JSON.parse(texto);
+
+} catch (error) {
+
+    throw new Error(
+        texto || "Respuesta inválida del servidor"
+    );
+
+}
+
+
+// =========================================
+// CORREO YA REGISTRADO
+// =========================================
+
+if (
+    resultado.ok === false &&
+    resultado.motivo === "email_duplicado"
+) {
+
+    iconoMensaje.textContent = "⚠️";
+
+    tituloMensaje.textContent =
+        "No se ha podido realizar el alta";
+
+    textosMensaje[0].textContent =
+        "No se ha podido dar el alta porque la cuenta ya existe en nuestra BBDD.";
+
+    textosMensaje[1].textContent =
+        'Puedes modificar el registro en el botón "Modificar asistencia" o registrarte con otra cuenta de correo.';
+
+    setTimeout(() => {
+
+        mensaje.classList.remove("visible");
+
+    }, 6000);
+
+    return;
+}
+
+
+// =========================================
+// CUALQUIER OTRO ERROR
+// =========================================
+
+if (
+    !respuesta.ok ||
+    resultado.ok !== true
+) {
+
+    throw new Error(
+        resultado.motivo ||
+        "Error al guardar la confirmación"
+    );
+
+}
 
 // Confirmación correcta
 
