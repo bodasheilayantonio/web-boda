@@ -412,16 +412,16 @@ if (
         "No se ha podido realizar el alta";
 
     textosMensaje[0].textContent =
-        "No se ha podido dar el alta porque la cuenta ya existe en nuestra BBDD.";
+        "No se ha podido realizar el alta porque el mail ya existe en nuestra base de datos.";
 
     textosMensaje[1].textContent =
-        'Puedes modificar el registro en el botón "Modificar asistencia" o registrarte con otra cuenta de correo.';
+        'Puedes modificar el registro en el botón "Modificar asistencia" o registrarte con otro mail.';
 
     setTimeout(() => {
 
         mensaje.classList.remove("visible");
 
-    }, 6000);
+    }, 10000);
 
     return;
 }
@@ -589,7 +589,7 @@ const mensajeBusqueda = document.getElementById("mensajeBusqueda");
 const bloqueNombreGenerico = document.getElementById("bloqueNombreGenerico");
 const nombreGenerico = document.getElementById("nombreGenerico");
 
-const EMAIL_GENERICO = "boda.sheilayantonio@gmail.com";
+const EMAIL_GENERICO = "invitados.sheilayantonio@gmail.com";
 
 const contenidoEdicion = document.getElementById("contenidoEdicion");
 const btnEditarConfirmacion = document.getElementById("btnEditarConfirmacion");
